@@ -21,7 +21,6 @@ export default function Home() {
       });
 
       const data = await response.json();
-      console.log(data)
       if (response.ok) {
         setMesa(data.mesa);
       } else {

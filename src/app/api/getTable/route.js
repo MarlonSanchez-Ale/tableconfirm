@@ -55,7 +55,7 @@ export async function GET(req) {
   if (!process.env.GOOGLE_CREDENTIALS) {
     console.error("Las credenciales de Google no están configuradas.");
     return NextResponse.json(
-      { error: "Error de configuración en el servidor." },
+      { error: "Las credenciales de Google no están configuradas." },
       { status: 500 }
     );
   }

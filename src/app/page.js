@@ -15,14 +15,13 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/getTable", {
-        method: "POST",
+      const response = await fetch(`/api/getTable?nombre=${encodeURIComponent(nombre)}`, {
+        method: "GET",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre }),
       });
 
       const data = await response.json();
-
+      console.log(data)
       if (response.ok) {
         setMesa(data.mesa);
       } else {
@@ -63,6 +62,8 @@ export default function Home() {
             <h1 className="text-4xl font-bold" style={{ color: "#6c8850" }}>Distribución de mesas</h1>
             <p className="text-gray-600 text-lg">Ingresá tu nombre para obtener tu número de mesa</p>
           </div>
+          {mesa && <p className="my-2 text-amber-600" style={{ color: '#af7b50'}}>Tu mesa asignada es: {mesa}</p>}
+          {error && <p className="mt-4 text-red-500">{error}</p>}
           <form onSubmit={handleSubmit} className='flex flex-col gap-2 w-full'>
             <input
               type="text"
@@ -71,8 +72,7 @@ export default function Home() {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
             />
-            {mesa && <p className="mt-4 text-green-500">Tu mesa asignada es: {mesa}</p>}
-            {error && <p className="mt-4 text-red-500">{error}</p>}
+        
             <div className='flex flex-col justify-center w-full'>
               <button
                 type="submit"

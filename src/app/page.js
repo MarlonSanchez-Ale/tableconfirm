@@ -56,7 +56,7 @@ export default function Home() {
             priority
           />
         </div>
-        <div className='p-10 flex flex-col justify-center mt-32 gap-3 text-center'>
+        <div className='p-10 flex flex-col justify-center md:mt-28 sm:mt-20 gap-3 text-center'>
           <div className="flex flex-col">
             <h1 className="text-4xl font-bold" style={{ color: "#6c8850" }}>Distribución de mesas</h1>
             <p className="text-gray-600 text-lg">Ingresá tu nombre para obtener tu número de mesa</p>

@@ -61,7 +61,7 @@ export default function Home() {
             <h1 className="text-4xl font-bold" style={{ color: "#6c8850" }}>Distribución de mesas</h1>
             <p className="text-gray-600 text-lg">Ingresá tu nombre para obtener tu número de mesa</p>
           </div>
-          {mesa && <p className="my-2 text-amber-600" style={{ color: '#af7b50'}}>Tu mesa asignada es: {mesa}</p>}
+          {mesa && <p className="my-2 text-amber-600 text-xl" style={{ color: '#af7b50'}}>Tu mesa asignada es: {mesa}</p>}
           {error && <p className="mt-4 text-red-500">{error}</p>}
           <form onSubmit={handleSubmit} className='flex flex-col gap-2 w-full'>
             <input

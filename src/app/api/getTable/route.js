@@ -17,6 +17,10 @@ function normalizeString(str) {
     .replace(/[\u0300-\u036f]/g, ""); // Eliminar tildes
 }
 
+function isValidName(name) {
+  return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/.test(name); // Permitir solo letras y espacios
+}
+
 function jaccardSimilarity(set1, set2) {
   const intersection = new Set([...set1].filter(x => set2.has(x)));
   const union = new Set([...set1, ...set2]);
@@ -42,6 +46,10 @@ export async function GET(req) {
 
   if (!nombres || !apellidos) {
     return NextResponse.json({ error: "Los parámetros 'nombres' y 'apellidos' son requeridos." }, { status: 400 });
+  }
+
+  if (!isValidName(nombres) || !isValidName(apellidos)) {
+    return NextResponse.json({ error: "Los nombres y apellidos no deben contener números, ni caracteres especiales." }, { status: 400 });
   }
 
   const nombresArray = nombres.trim().split(" ").filter(Boolean);

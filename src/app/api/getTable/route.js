@@ -109,6 +109,6 @@ export async function GET(req) {
     return NextResponse.json({ mesa: bestMatch }, { status: 200 });
   } catch (error) {
     console.error("Error al conectar con Google Sheets:", error);
-    return NextResponse.json({ error: "Error interno del servidor al consultar los datos." }, { status: 500 });
+    return NextResponse.json({ error: "Error interno del servidor al consultar los datos, intente luego." }, { status: 500 });
   }
 }

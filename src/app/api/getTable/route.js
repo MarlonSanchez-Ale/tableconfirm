@@ -106,7 +106,7 @@ export async function GET(req) {
       return NextResponse.json({ error: "Nombre no encontrado en la lista." }, { status: 404 });
     }
 
-    return NextResponse.json({ mesa: bestMatch }, { status: 200 });
+    return NextResponse.json({ mesa: bestMatch }, { status: 200,   headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Error al conectar con Google Sheets:", error);
     return NextResponse.json({ error: "Error interno del servidor al consultar los datos, intente luego." }, { status: 500 });

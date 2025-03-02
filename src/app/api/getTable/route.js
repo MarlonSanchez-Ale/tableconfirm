@@ -45,23 +45,23 @@ export async function GET(req) {
   const apellidos = searchParams.get("apellidos");
 
   if (!nombres || !apellidos) {
-    return NextResponse.json({ error: "Los parámetros 'nombres' y 'apellidos' son requeridos." }, { status: 400 });
+    return NextResponse.json({ error: "Los parámetros 'nombres' y 'apellidos' son requeridos." }, { status: 400, headers: { "Cache-Control": "no-store" } });
   }
 
   if (!isValidName(nombres) || !isValidName(apellidos)) {
-    return NextResponse.json({ error: "Los nombres y apellidos no deben contener números, ni caracteres especiales." }, { status: 400 });
+    return NextResponse.json({ error: "Los nombres y apellidos no deben contener números, ni caracteres especiales." }, { status: 400, headers: { "Cache-Control": "no-store" } });
   }
 
   const nombresArray = nombres.trim().split(" ").filter(Boolean);
   const apellidosArray = apellidos.trim().split(" ").filter(Boolean);
 
   if (nombresArray.length < 1 || apellidosArray.length < 1) {
-    return NextResponse.json({ error: "Debe ingresar al menos un nombre y un apellido." }, { status: 400 });
+    return NextResponse.json({ error: "Debe ingresar al menos un nombre y un apellido." }, { status: 400, headers: { "Cache-Control": "no-store" } });
   }
 
   if (!process.env.GOOGLE_CREDENTIALS) {
     console.error("Las credenciales de Google no están configuradas.");
-    return NextResponse.json({ error: "Las credenciales de Google no están configuradas." }, { status: 500 });
+    return NextResponse.json({ error: "Las credenciales de Google no están configuradas." }, { status: 500, headers: { "Cache-Control": "no-store" } });
   }
 
   try {
@@ -79,7 +79,7 @@ export async function GET(req) {
     const rows = response.data.values || [];
 
     if (rows.length === 0) {
-      return NextResponse.json({ error: "No se encontraron datos en la hoja de cálculo." }, { status: 404 });
+      return NextResponse.json({ error: "No se encontraron datos en la hoja de cálculo." }, { status: 404, headers: { "Cache-Control": "no-store" } });
     }
 
     let bestMatch = null;
@@ -103,12 +103,13 @@ export async function GET(req) {
     }
 
     if (!bestMatch || highestSimilarity < 0.5) {
-      return NextResponse.json({ error: "Nombre no encontrado en la lista." }, { status: 404 });
+      return NextResponse.json({ error: "Nombre no encontrado en la lista." }, { status: 404, headers: { "Cache-Control": "no-store" } });
     }
 
     return NextResponse.json({ mesa: bestMatch }, { status: 200,   headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("Error al conectar con Google Sheets:", error);
-    return NextResponse.json({ error: "Error interno del servidor al consultar los datos, intente luego." }, { status: 500 });
+    
+    return NextResponse.json({ error: "Error interno del servidor al consultar los datos, intente luego." }, { status: 500, headers: { "Cache-Control": "no-store" } });
   }
 }
